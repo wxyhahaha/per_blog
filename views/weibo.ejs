@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+	<script src="../public/js/jquery-3.2.1.min.js"></script>
+	<link rel="stylesheet" href="../public/css/weibo.css">
+	<style>
+
+	</style>
+</head>
+<body>
+<div class="filter">
+	<nav>
+		<ul class="username_ul">
+			<li>
+				<!-- <a href="http://localhost:8585/user">登录</a>
+				<a href="http://localhost:8585/user">注册</a> -->
+				<% if(show){ %>
+				<a class="username" href="http://localhost:8585/userhome"><%= username %></a>
+				
+			<% }else{ %> 
+			
+				<span class="btn-login_regis btn-login">登录</span>
+				<span class="btn-login_regis btn-register">注册</span>
+		<% } %>
+				<% if(show){ %>
+				<a class="quit" href="http://localhost:8585/quit">退出</a>
+				<% } %>
+			</li>
+		</ul>
+		<i class="denglu"><%= show %></i>
+
+		<h3>登陆成功</h3>
+	</nav>
+	<section>
+		<div class="main">
+			<div class="aside aside-left"></div>
+			<div class="text_wrapper">
+				<i class="i1">有什么</i><i class="i2">新鲜</i><i class="i3">事</i><i class="i4">想告诉大</i><i class="i5">家?</i>
+				<textarea name="" id=""cols="30" rows="10" class="comment" wrap="hard"></textarea>
+
+				<% if(!show){ %>
+				<span class="tip">请先登录</span>
+				<% } %>
+				<button class="publish" >发表</button>
+			</div>
+			<div class="aside aside-rigth">
+				
+			</div>
+			<div class="content_wrapper">
+				<div class="classify">分类</div>
+				<ul class="content">
+				<% for(var i = content.length-1;i >=0;i--){ %>
+					<li>
+						<div class="li_wrapper">
+							<div class="content-head">
+								<span class="self-photo"><img src="../public/img/body_bg.jpg" alt=""></span>
+								<div class="handle">
+									<span></span>
+									<span></span>
+									<span></span>
+								</div>
+								<span class="writer"><%= content[i].writer %></span>
+								<br>
+								<span class="time"><%= content[i].time %></span>
+								
+							</div>
+							<div class="content-main">
+								<span class="_id" style="display: none"><%= content[i]._id %></span>
+								<p><%= content[i].content %>
+									
+								</p>
+							</div>
+						</div>
+							<div class="content-foot">
+								<div class="discuss-wrapper"><span></span><span class="collect">收藏</span></div>
+								<div class="discuss-wrapper"><span class="share">分享</span></div>
+								<div class="discuss-wrapper"><span class="discuss">评论</span></div>
+								<div class="discuss-wrapper"><span class="like">点赞</span></div>
+							</div>
+							<div class="discuss-content-wrapper">
+								<div >
+									<span class="self-photo self"><img src="../public/img/body_bg.jpg" alt=""></span>
+									<div>
+										<div class="username"><span><%= username %></span></div>
+										<textarea name="" id=""class="self_discuss_textarea"></textarea><button class="btn-discuss">评论</button>
+									</div>
+								</div>
+								<ul class="discussion-content">
+										<% for(var j = content[i].discussion.length-1;j >=0;j--){ %>
+										<li class="discussion-content-item">
+											
+
+											<p>
+												<span class="self-photo self small-self"><img src="../public/img/body_bg.jpg" alt=""></span>
+												<%=  content[i].discussion[j].content %> <br>
+											
+												<span class="username "><%=  content[i].discussion[j].discuss_username %></span>
+												<span><%=  content[i].discussion[j].time %></span>
+											
+											
+											</p>
+											
+											<div class="handle-op">
+												<span>回复</span>
+												<span>点赞</span>
+												<% if(show){ %>
+												<span>删除</span>
+												<% } %>
+											</div>
+										</li>
+										<% } %>
+										
+									
+								</ul>
+							</div>
+												
+					</li>
+					<% } %> 
+				</ul>
+			</div>
+						
+		</div>	
+	</section>
+	</div>	
+	<div class="wait"><img src="../public/img/5-121204193R5-50.gif" alt=""></div>
+	<div class="mask">
+
+		<div class="loginbox">
+		<span class="mask_close">X</span>
+		<div class=" login-statusbox ">
+			<span class="close">X</span>
+			<p></p>
+		</div>
+			<div class="wrapper">
+				
+				<h2>登录</h2>
+				<label for="username">用户:</label><input type="text" class="username" ><span class="username-tip"></span>
+				<br>
+				<label for="pass">密码:</label><input type="password" class="pass"><span class="pass-tip"></span>
+				<br>
+				<button class="submit">登录</button>
+				<div>
+					<span>还没有账号？点击 
+						<span class="btn-login_regis btn-register">注册</span></span>
+				</div>
+
+			</div>
+			
+		</div>
+		<div class="registerbox">
+		<span class="mask_close">X</span>
+		<div class=" register-statusbox ">
+			<span class="close">X</span>
+			<p></p>
+		</div>
+			<div class="wrapper">	
+				<h2>注册</h2>
+				<label for="username">用户:</label><input type="text" class="username" id="username"><span class="username-tip"></span>
+				<br>
+				<label for="pass">密码:</label><input type="password" class="pass" id="pass"><span class="pass-tip"></span>
+				<br>
+				<button class="register">注册</button>
+				<div>
+					<span>返回 
+						<span class="btn-login_regis btn-login">登录</span></span>
+				</div>
+
+			</div>
+			
+		</div>		
+	</div>
+
+	<script>
+		var getFormatCode=function(strValue){
+	return strValue.replace(/\r\n/g, '<br/>').replace(/\n/g, '<br/>').replace(/\s/g, ' ');
+}
+
+var unescapeHTML = function(a){  
+    a = "" + a;  
+    return a.replace(/</g, "<").replace(/>/g, ">").replace(/&/g, "&").replace(/"/g, '"').replace(/'/g, "'");  
+}
+		$('.btn-register').click(function(){
+			$('.loginbox').hide().siblings('.registerbox').fadeIn();
+		})
+		$('.btn-login').click(function(){
+			$('.registerbox').hide().siblings('.loginbox').fadeIn();
+		})
+		$('.publish').click(function(event){
+			var str = getFormatCode($('.comment').val())
+			if($('.comment').val() == '') return;
+			$('.wait').show();
+			$.ajax({
+				url: 'http://localhost:8585/publish',
+				type: 'get',
+				dataType: 'json',
+				data: {content:str},
+				success:function(res){
+					$('.wait').hide();
+					
+					if(res.status){
+						location.href = 'http://localhost:8585/'
+					}
+					else{
+						$('.mask').fadeIn();
+						$('.filter').css('filter','blur(2px)');
+						$('.registerbox').hide().siblings('.loginbox').fadeIn();
+					}
+				}
+			})		
+		});
+		$('.btn-login').click(function(){
+			$('.mask').fadeIn();
+			$('.filter').css('filter','blur(2px)');
+			$('.registerbox').hide().siblings('.loginbox').fadeIn();
+		})
+		$('.btn-register').click(function(){
+			$('.mask').fadeIn();
+			$('.filter').css('filter','blur(2px)');
+			$('.loginbox').hide().siblings('.registerbox').fadeIn();
+		})
+		$('.comment').focus(function(event) {
+			// alert(); 
+			$(this).css('border', '1px solid #ff8140');	
+			$('span.tip').css({display: 'none',});
+		});
+		$('.comment').blur(function(event) {
+			// alert(); 	
+			$(this).css('border', '1px solid #ccc');	
+			$('span.tip').css({display: 'block',});
+		});
+
+		//登陆
+		$('.submit').click(function(event) {
+			var a;
+			var b;
+			if($('.loginbox .username').val() == ''){
+				$('.loginbox .username-tip').html('请输入用户名');
+				a = false;
+			}
+			else{
+				a = true;
+				$('.loginbox .loginbox .username-tip').html('');
+			}
+			if($('.loginbox .pass').val() == ''){
+				$('.loginbox .pass-tip').html('请输入密码');
+				b = false;
+			}
+			else{
+				b = true;
+				$('.pass-tip').html('');
+			}
+			
+			if(a&&b){
+				$('.wait').show();
+				$.ajax({
+				url: 'http://localhost:8585/login',
+				type: 'post',
+				dataType: 'json',
+				data: {username:$('.loginbox .username').val(),pass:$('.loginbox .pass').val()},
+				success:function(res){
+					$('.wait').hide();
+					// console.log(res)
+					//1 没被注册 0数据库有这个用户 2密码错误
+					if(res.status == 1){
+						$('.loginbox .username').val('');
+						$('.login-statusbox p').html('用户不存在')
+						$('.login-statusbox').fadeIn();
+
+					}
+					else if(res.status == 2){
+						
+						$('.login-statusbox p').html('密码错误')
+						$('.login-statusbox').fadeIn();
+					}
+					else{						
+						location.href = 'http://localhost:8585/'
+					}
+				}
+			})
+			}
+			
+		});
+		//注册
+		$('.registerbox input.username').blur(function(){
+			// console.log('ssd')
+			var a =true;
+			if($(this).val() == ''){
+				a = false;
+				$('.registerbox .username').addClass('redborder').removeClass('greenborder');
+
+				$('.registerbox .username-tip').html('请输入账户');
+				
+			}
+			else{
+				a = true;
+				setTimeout(function(){
+					$('.registerbox .username-tip').html('');
+					$('.registerbox .username').removeClass('redborder');
+				},1000)
+				
+			}
+			if(a){
+				$.ajax({
+					url: 'http://localhost:8585/login',
+					type: 'post',
+					dataType: 'json',
+					data: {username:$('.registerbox .username').val()},
+					success:function(res){
+						
+						if(res.status == 1){
+							$('.registerbox .username-tip').html('');
+							$('.registerbox .username').addClass('greenborder').removeClass('redborder');
+						}
+						
+						else{
+							$('.registerbox .username').addClass('redborder').removeClass('greenborder');
+							$('.registerbox .username-tip').html('被注册过');
+						}
+					}
+				})
+			}
+			
+		})
+		$('.register').click(function(){
+			var c;
+			var d;
+			if($('.registerbox .username').val() == ''){
+				$('.registerbox .username-tip').html('请输入用户名');
+				c = false;
+			}
+			else{
+				c = true;
+				$('.registerbox .username-tip').html('');
+			}
+			if($('.registerbox .pass').val() == ''){
+				$('.registerbox .pass-tip').html('请输入密码');
+				d = false;
+			}
+			else{
+				d = true;
+				$(' .registerbox .pass-tip').html('');
+			}
+			
+			if(c&&d){
+				$('.wait').show();
+				$.ajax({
+				url: 'http://localhost:8585/register',
+				type: 'post',
+				dataType: 'json',
+				data: {username:$('.registerbox .username').val(),pass:$('.registerbox .pass').val()},
+				success:function(res){
+					$('.wait').hide();
+					if(res.status == 1){
+						$('.registerbox .username-tip').html('');
+					}
+					else if(res.status == 3){
+						$('.register-statusbox p').html('注册成功')
+						$('.register-statusbox').fadeIn(600,function(){
+							setTimeout(function(){
+								$('.registerbox').hide().siblings('.loginbox').fadeIn();
+							},1500)
+							
+						});
+						
+					}
+					else{
+						$('.registerbox .username').addClass('redborder').removeClass('greenborder');
+						$('.registerbox .username-tip').html('被注册过');
+						setTimeout(function(){
+							$('.registerbox .username').removeClass('redborder');
+						},2000)
+					}
+				}
+			})
+			}
+			
+		})
+		$('span.close').click(function(event) {
+			$(this).parent().fadeOut();
+		});
+		$('span.mask_close').click(function(event) {
+			$('.mask').fadeOut();
+			$('.filter').css('filter','blur(0px)');
+		});
+
+		//登陆成功动画
+		if($('.denglu').html() == 'true'){
+			$('h3').html('登录成功')
+			$('h3').addClass('float')
+		}
+		else{
+			// $('h3').html('退出成功')
+			// $('h3').removeClass('float')
+			// $('h3').addClass('float')
+		}
+		//点赞
+		// $('.like').parent().click(function(){
+		// 	$(this).addClass('nice');
+		// 	$.ajax({
+		// 		url: 'http://localhost:8585/like',
+		// 		type: 'get',
+		// 		dataType: 'json',
+		// 		data: {username:username,writer:articel_writer,content:$(this).siblings('.self_discuss_textarea').val(),_id:_id},
+		// 		success:function(res){
+		// 			if(res.status.n == 1){
+		// 				$(_this).parents('ul.content>li').find('ul.discussion-content').prepend(`<li class="discussion-content-item"><span>${res.info.discuss_username}:</span>   ${res.info.content}</li>`)
+		// 				$('.self_discuss_textarea').val('');
+		// 			}
+		// 		}
+		// 	})
+		// })
+		//评论
+		$('.discuss').parent().click(function(){
+			$(this).parents('.content-foot').siblings('.discuss-content-wrapper').toggle();
+			var _id = $(this).parents('.content-foot').siblings('.li_wrapper').find('._id').html();
+			
+			$.ajax({
+				url: 'http://localhost:8585/showdiscussion',
+				type: 'post',
+				dataType: 'json',
+				data: {okma:true,_id:_id},
+				success:function(res){
+					
+				}
+			})
+		})
+		//评论
+		$('.btn-discuss').click(function(){
+
+			if($(this).siblings('.self_discuss_textarea').val() == '') return;
+			$('.wait').show();
+				var articel_writer = $('.writer').html();
+				var username = $('a.username').html();
+				var _id = $(this).parents('.discuss-content-wrapper').siblings('.li_wrapper').find('._id').html();
+				var _this = this;
+				var content1 = getFormatCode($(this).siblings('.self_discuss_textarea').val())
+				$.ajax({
+					url: 'http://localhost:8585/discuss',
+					type: 'post',
+					dataType: 'json',
+					data: {username:username,writer:articel_writer,content:content1,_id:_id},
+					success:function(res){
+						$('.wait').hide();
+						if(res.username){
+							var content = unescapeHTML(res.info.content);
+							
+								// if(res.status == '用户没登录')
+								if(res.status.n == 1){
+								$(_this).parents('ul.content>li').find('ul.discussion-content').prepend(
+									`<li class="discussion-content-item">
+											
+
+											<p>
+												<span class="self-photo self small-self"><img src="../public/img/body_bg.jpg" alt=""></span>
+												${content}<br>
+											
+												<span class="username ">${res.username}</span>
+												<span>${res.info.time}</span>
+											
+											
+											</p>
+											
+											<div class="handle-op">
+												<span>回复</span>
+												<span>点赞</span>
+												<span>删除</span>
+												
+											</div>
+										</li>`)
+								$('.self_discuss_textarea').val('');
+							}
+						}
+						else{
+								$('.mask').fadeIn();
+								$('.filter').css('filter','blur(2px)');
+								$('.registerbox').hide().siblings('.loginbox').fadeIn();
+						}
+						
+					}
+				})
+			
+	})
+	</script>
+</body>
+</html>
